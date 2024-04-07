@@ -24,6 +24,9 @@ app.set("view engine", "pug");
 // C - Controllers - MVC Architecture
 // Routing
 
-app.get("/", (req, res) => res.send("Hello World!"));
+const indexRouter = require("./routes/index");
+app.use("/index", indexRouter);
+
+app.get("/", (req, res) => {res.redirect("/index")});
 
 module.exports = app;
