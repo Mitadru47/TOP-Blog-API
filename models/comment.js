@@ -7,6 +7,8 @@ const CommentSchema = new Schema({
     email: { type: String, required: true },
 
     body: { type: String, required: true },
+
+    post: { type: Schema.Types.ObjectId, ref: "Post", required: true },
     timestamp: { type: Date, required: true }
 });
 
