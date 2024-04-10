@@ -1,0 +1,35 @@
+extends layout 
+
+block content 
+
+    div#post-detail-container
+
+        div#post-detail
+
+            div.post-title
+                a(href=post[0].url) #{post[0].title}
+
+            div.post-body #{post[0].body}
+
+        div.post-timestamp #{post[0].timestamp}
+
+    div#comments-container
+    
+        if comments.length > 0
+        
+            h2 Comments
+            each comment in comments 
+
+                div.comment
+
+                    div.comment-username
+                        a(href=comment.url) #{comment.username}:
+
+                    div.comment-body #{comment.body}
+                    
+                    br
+
+        else 
+
+            h2 Comments
+            div#no-comments No Comments

@@ -2,7 +2,9 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
+
 const Post = require("../models/post");
+const Comment = require("../models/comment");
 
 // Index Home Page
 exports.index = (async (req, res, next) => {
@@ -18,5 +20,15 @@ exports.index = (async (req, res, next) => {
 
 // Post Detail
 exports.post_detail = asyncHandler(async(req, res, next) => {
-    res.send("Post Detail - NOT IMPLEMENTED - " + req.params.id);
+
+    const [ author, posts, post, comments ] = await Promise.all([
+
+        User.find().exec(),
+        Post.find().exec(),
+
+        Post.find({ _id: req.params.id }).exec(),
+        Comment.find({ post: req.params.id }).exec()
+    ]);
+
+    res.render("post_detail", { author: author, posts: posts, post: post, comments: comments });
 });
