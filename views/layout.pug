@@ -10,5 +10,17 @@ html
 
     body 
 
-        div#header Blog API 
+        div#top-nav
+            
+            div#header-container
+                a#header Blog API 
+
+            div#header-info
+           
+                div#author-container
+                    a#author(href=author[0].url) Author: #{author[0].username}
+
+                div#post-count-container
+                    p#post-count Posts: #{posts.length}
+
         block content
