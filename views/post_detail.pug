@@ -26,10 +26,32 @@ block content
                         a(href=comment.url) #{comment.username}:
 
                     div.comment-body #{comment.body}
-                    
+
                     br
 
         else 
 
             h2 Comments
             div#no-comments No Comments
+
+    br
+    br
+    br
+    br
+
+    div#comment-creator
+
+        div#form-container
+
+            form(action=post[0].url + "/comment/create" method="POST")
+
+                textarea#body-input(name="body", cols="150", rows="4" placeholder="Comment")
+
+                br
+
+                input(type="text" name="username" placeholder="Username")
+                input#email-input(type="text" name="email" placeholder="Email")
+                
+                input#post-input(name="post" type="text" value=post[0]._id readOnly)
+                
+                button#submit-button(type="submit") Comment
