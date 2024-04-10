@@ -9,4 +9,8 @@ const PostSchema = new Schema({
     timestamp: { type: Date, required: true }
 });
 
+PostSchema.virtual("url").get(function (){
+    return "/index/post/" + this._id;
+});
+
 module.exports = mongoose.model("Post", PostSchema);

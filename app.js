@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+// Establishing Static Folder Access - public
+app.use(express.static(__dirname + "/public"));
+
 // M - Model - MVC Architecture
 // MongoDB Connection Setup
 
