@@ -30,6 +30,11 @@ app.set("view engine", "pug");
 // C - Controllers - MVC Architecture
 // Routing
 
+//**// Enable All CORS Requests //**//
+
+const cors = require("cors");
+app.use(cors());
+
 const indexRouter = require("./routes/index");
 app.use("/index", indexRouter);
 

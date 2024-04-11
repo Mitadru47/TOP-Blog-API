@@ -15,7 +15,8 @@ exports.index = (async (req, res, next) => {
         Post.find().exec()
     ]);
 
-    res.render("index", { author: author, posts: posts });
+    res.status(200).json({ author: author, posts: posts });
+    // res.render("index", { author: author, posts: posts });
 });
 
 // Post Detail
