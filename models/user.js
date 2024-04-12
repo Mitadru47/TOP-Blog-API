@@ -16,4 +16,9 @@ UserSchema.virtual("url").get(function (){
     return "/index/user/" + this._id;
 });
 
+// To make sure virtual properties are usable in FE - React Components
+
+UserSchema.set('toObject', { virtuals: true });
+UserSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model("User", UserSchema);

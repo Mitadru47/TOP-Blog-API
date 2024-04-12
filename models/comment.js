@@ -16,4 +16,9 @@ CommentSchema.virtual("url").get(function (){
     return "/index/post/" + this.post._id + "/comment/" + this._id;
 });
 
+// To make sure virtual properties are usable in FE - React Components
+
+CommentSchema.set('toObject', { virtuals: true });
+CommentSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model("Comment", CommentSchema);

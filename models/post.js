@@ -19,4 +19,9 @@ PostSchema.virtual("formattedTimestamp").get(function (){
     return DateTime.fromJSDate(this.timestamp).toISODate();
 });
 
+// To make sure virtual properties are usable in FE - React Components
+
+PostSchema.set('toObject', { virtuals: true });
+PostSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model("Post", PostSchema);
