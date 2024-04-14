@@ -1,13 +1,9 @@
 const express = require("express");
 const app = express();
 
-// Establishing Static Folder Access - public
-app.use(express.static(__dirname + "/public"));
-
 // Establishing URL Parser
 app.use(express.urlencoded({ extended: false }));
 
-// M - Model - MVC Architecture
 // MongoDB Connection Setup
 
 const mongoose = require("mongoose");
@@ -21,19 +17,10 @@ async function main(){
 
 main().catch((error) => console.log(error));
 
-// V - View - MVC Architecture
-// View Engine Setup
-
-app.set("views", __dirname + "/views");
-app.set("view engine", "pug");
-
-// C - Controllers - MVC Architecture
 // Routing
 
-//**// Enable All CORS Requests //**//
-
-const cors = require("cors");
-app.use(cors());
+const cors = require("cors");   
+app.use(cors());                //**// Enable All CORS Requests //**//
 
 const indexRouter = require("./routes/index");
 app.use("/index", indexRouter);
