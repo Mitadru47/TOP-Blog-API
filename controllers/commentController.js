@@ -1,8 +1,12 @@
-const asyncHandler =require("express-async-handler");
+const asyncHandler = require("express-async-handler");
+
+const Comment = require("../models/comment");
 
 // Comment Detail
 exports.comment_detail = asyncHandler(async (req, res, next) => {
-    res.status(200).json("Comment Detail - NOT IMPLEMENTED - " + req.params.postid + "/" + req.params.commentid);
+
+    const comment = await Comment.findById(req.params.commentid).populate("post").exec();
+    res.status(200).json({ comment: comment });
 });
 
 // Comment Create POST
