@@ -48,21 +48,22 @@ async function createPosts(){
 
     await Promise.all([
 
-        createPost(0, "The Epilogue", "I Aint Got Too Much To Say No More", new Date()),
-        createPost(1, "The Fall", "The Game Aint Over… I Aint Played My Final Move", new Date()),
-        createPost(2, "The Doubts", "I Will Keep Trying, And You will Keep Doubting Me, And We will Keep Failing", new Date()),
-        createPost(3, "The Survivors Of Guarma", "I Am Just Trying To Make Sure Some Of Us Survive", new Date()),
+        createPost(0, "The Epilogue", "I Aint Got Too Much To Say No More", new Date(), true),
+        createPost(1, "The Fall", "The Game Aint Over… I Aint Played My Final Move", new Date(), false),
+        createPost(2, "The Doubts", "I Will Keep Trying, And You will Keep Doubting Me, And We will Keep Failing", new Date(), true),
+        createPost(3, "The Survivors Of Guarma", "I Am Just Trying To Make Sure Some Of Us Survive", new Date(), true),
     ]);
 } 
 
-async function createPost(index, title, body, timestamp){
+async function createPost(index, title, body, timestamp, publishStatus){
 
     const post = new Post({
 
         title: title,
         body: body,
 
-        timestamp: timestamp
+        timestamp: timestamp,
+        publishStatus: publishStatus
     });
 
     await post.save();

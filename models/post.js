@@ -8,7 +8,9 @@ const PostSchema = new Schema({
     title: { type: String, required: true },
     body: { type: String, required: true},
 
-    timestamp: { type: Date, required: true }
+    timestamp: { type: Date, required: true },
+    
+    publishStatus: { type: Boolean, required: true }
 });
 
 PostSchema.virtual("url").get(function (){

@@ -12,7 +12,7 @@ exports.index = (async (req, res, next) => {
     const [ author, posts ] = await Promise.all([
         
         User.find().exec(),
-        Post.find().exec()
+        Post.find({ publishStatus: true }).exec()
     ]);
 
     res.status(200).json({ author: author, posts: posts });
