@@ -11,7 +11,7 @@ exports.comment_detail = asyncHandler(async (req, res, next) => {
 });
 
 // Comment Create POST
-exports.comment_create_post = [
+exports.create_comment = [
 
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("username", "Username cannot be empty!").trim().isLength({ min: 1 }).escape(),

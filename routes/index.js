@@ -16,8 +16,14 @@ router.get("/user/:id", userController.user_detail);
 // GET - Index
 router.get("/", postController.index);
 
+// GET - Dashboard
+router.get("/dashboard", postController.dashboard);
+
 // GET - Post Detail
 router.get("/post/:id", postController.post_detail);
+
+// POST - Create Post
+// router.post("/post/create", postController.create_post);
 
 /// COMMENT ROUTES ///
 
@@ -25,6 +31,6 @@ router.get("/post/:id", postController.post_detail);
 router.get("/post/:postid/comment/:commentid", commentController.comment_detail);
 
 // POST - Create Comment
-router.post("/post/:postid/comment/create", commentController.comment_create_post);
+router.post("/post/:postid/comment/create", commentController.create_comment);
 
 module.exports = router;

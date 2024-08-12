@@ -7,7 +7,7 @@ const Post = require("../models/post");
 const Comment = require("../models/comment");
 
 // Index Home Page
-exports.index = (async (req, res, next) => {
+exports.index = asyncHandler(async (req, res, next) => {
 
     const [ author, posts ] = await Promise.all([
         
@@ -16,6 +16,13 @@ exports.index = (async (req, res, next) => {
     ]);
 
     res.status(200).json({ author: author, posts: posts });
+});
+
+// Dashboard Home Page
+exports.dashboard = asyncHandler(async (req, res, next) => {
+
+    const posts = await Post.find().exec();
+    res.status(200).json({ posts: posts });
 });
 
 // Post Detail
