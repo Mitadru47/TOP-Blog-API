@@ -22,6 +22,9 @@ router.get("/dashboard", postController.dashboard);
 // GET - Post Detail
 router.get("/post/:id", postController.post_detail);
 
+// POST - Publish/Unpublish Post
+router.post("/post/:postid/publishStatus/:status", postController.publish_status);
+
 // POST - Create Post
 // router.post("/post/create", postController.create_post);
 

@@ -36,3 +36,20 @@ exports.post_detail = asyncHandler(async(req, res, next) => {
 
     res.status(200).json({ post: post, comments: comments });
 });
+
+// Post Publish Status
+
+exports.publish_status = asyncHandler(async(req, res, next) => {
+
+    if(req.params.status === "publish"){
+        
+        await Post.findByIdAndUpdate(req.params.postid, { publishStatus: true }).exec();
+        res.status(200).json("Published!");    
+    }
+
+    if(req.params.status === "unpublish"){
+        
+        await Post.findByIdAndUpdate(req.params.postid, { publishStatus: false }).exec();
+        res.status(200).json("Unpublished!");      
+    }
+});
