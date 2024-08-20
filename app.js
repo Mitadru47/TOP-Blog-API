@@ -23,8 +23,11 @@ const cors = require("cors");
 app.use(cors());                //**// Enable All CORS Requests //**//
 
 const indexRouter = require("./routes/index");
-app.use("/index", indexRouter);
+const dashboardRouter = require("./routes/dashboard");
 
-app.get("/", (req, res) => {res.redirect("/index")});
+app.use("/index", indexRouter);
+app.use("/dashboard", dashboardRouter);
+
+app.get("/", (req, res) => {res.status(200).json("Welcome!")});
 
 module.exports = app;

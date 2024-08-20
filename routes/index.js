@@ -6,6 +6,8 @@ const userController = require("../controllers/userController")
 const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
 
+/////////////////////////////////////// Blog API - Public ///////////////////////////////////////
+
 /// USER ROUTES ///
 
 // GET - User Detail
@@ -16,17 +18,8 @@ router.get("/user/:id", userController.user_detail);
 // GET - Index
 router.get("/", postController.index);
 
-// GET - Dashboard
-router.get("/dashboard", postController.dashboard);
-
 // GET - Post Detail
 router.get("/post/:id", postController.post_detail);
-
-// POST - Publish/Unpublish Post
-router.post("/post/:postid/publishStatus/:status", postController.publish_status);
-
-// POST - Create Post
-// router.post("/post/create", postController.create_post);
 
 /// COMMENT ROUTES ///
 
