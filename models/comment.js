@@ -13,7 +13,7 @@ const CommentSchema = new Schema({
 });
 
 CommentSchema.virtual("url").get(function (){
-    return "/index/post/" + this.post._id + "/comment/" + this._id;
+    return "/post/" + this.post._id + "/comment/" + this._id;
 });
 
 // To make sure virtual properties are usable in FE - React Components

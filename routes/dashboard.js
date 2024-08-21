@@ -21,6 +21,7 @@ router.get("/", postController.dashboard);
 // POST - Publish Status
 router.post("/post/:postid/publishStatus/:status", postController.publish_status);
 
+// GET -  Post Detail
 // POST - Create Post
 // POST - Edit Post
 // POST - Delete Post
