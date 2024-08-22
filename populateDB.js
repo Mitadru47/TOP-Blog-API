@@ -6,7 +6,9 @@ const User = require("./models/user");
 const Post = require("./models/post")
 const Comment = require("./models/comment");
 
+let postAuthor = {};
 const posts = [];
+
 mongoose.set("strictQuery", false);
 
 async function main(){ 
@@ -39,6 +41,8 @@ async function createUser(){
     });
 
     await user.save();
+    
+    postAuthor = user;
     console.log("Added User: " + user.username);
 } 
 
@@ -63,6 +67,8 @@ async function createPost(index, title, body, timestamp, publishStatus){
         body: body,
 
         timestamp: timestamp,
+
+        author: postAuthor,
         publishStatus: publishStatus
     });
 

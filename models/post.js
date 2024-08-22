@@ -10,6 +10,7 @@ const PostSchema = new Schema({
 
     timestamp: { type: Date, required: true },
     
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
     publishStatus: { type: Boolean, required: true }
 });
 
