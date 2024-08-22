@@ -13,7 +13,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.virtual("url").get(function (){
-    return "/user/" + this._id;
+    return "/user";
 });
 
 // To make sure virtual properties are usable in FE - React Components

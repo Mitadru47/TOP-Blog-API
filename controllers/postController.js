@@ -30,7 +30,7 @@ exports.post_detail = asyncHandler(async(req, res, next) => {
 
     const [ post, comments ] = await Promise.all([
 
-        Post.find({ _id: req.params.id }).exec(),
+        Post.find({ _id: req.params.id }).populate("author").exec(),
         Comment.find({ post: req.params.id }).exec()
     ]);
 

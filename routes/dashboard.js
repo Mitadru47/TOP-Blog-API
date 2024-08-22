@@ -11,6 +11,8 @@ const commentController = require("../controllers/commentController");
 /// USER ROUTES ///
 
 // GET - User Detail
+router.get("/user", userController.user_detail);
+
 // POST - Edit User Detail 
 
 /// POST ROUTES ///
