@@ -27,6 +27,8 @@ router.post("/post/:postid/publishStatus/:status", postController.publish_status
 router.get("/post/:id", postController.post_detail);
 
 // POST - Create Post
+router.post("/post/create", postController.create_post);
+
 // POST - Edit Post
 // POST - Delete Post
 

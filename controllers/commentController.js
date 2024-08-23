@@ -10,7 +10,7 @@ exports.comment_detail = asyncHandler(async (req, res, next) => {
     res.status(200).json({ comment: comment });
 });
 
-// Comment Create POST
+//  Create Comment
 exports.create_comment = [
 
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),

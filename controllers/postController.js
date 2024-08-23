@@ -53,3 +53,37 @@ exports.publish_status = asyncHandler(async(req, res, next) => {
         res.status(200).json("Unpublished!");      
     }
 });
+
+// Create Post
+
+exports.create_post = [
+
+    body("title", "Title cannot be empty").trim().isLength({ min: 1 }).escape(),
+    body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
+
+    body("author", "Author cannot be empty!").trim().isLength({ min: 1 }).escape(),
+
+    asyncHandler(async (req, res, next) => {
+
+        const error = validationResult(req);
+        const post = new Post({
+
+            title: req.body.title,
+            body: req.body.body,
+
+            timestamp: new Date(),
+
+            author: req.body.author,
+            publishStatus: false
+        });
+
+        if(error.isEmpty){
+
+            await post.save();
+            res.status(200).json("New Post Created!");
+        }
+
+        else
+            res.status(400).json("DB Injection Failed!");
+    })
+];
