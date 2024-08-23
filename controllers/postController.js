@@ -80,7 +80,9 @@ exports.create_post = [
         if(error.isEmpty){
 
             await post.save();
-            res.status(200).json("New Post Created!");
+
+            const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
+            res.redirect(referer + "/dashboard" + post.url);
         }
 
         else
