@@ -118,3 +118,13 @@ exports.create_post = [
             res.status(400).json("DB Injection Failed!");
     })
 ];
+
+// Delete Post
+
+exports.delete_post = asyncHandler(async (req, res, next) => {
+
+    await Post.findByIdAndDelete(req.params.id);
+   
+    const referer = req.headers.referer.substring(0, req.headers.referer.length - 1);
+    res.redirect(referer + "/dashboard");
+});

@@ -30,6 +30,7 @@ router.get("/post/:id", postController.post_detail);
 router.post("/post/create", postController.create_post);
 
 // POST - Delete Post
+router.post("/post/:id/delete", postController.delete_post);
 
 /// COMMENT ROUTES ///
 
