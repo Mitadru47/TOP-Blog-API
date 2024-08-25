@@ -26,10 +26,9 @@ router.post("/post/:postid/publishStatus/:status", postController.publish_status
 // GET -  Post Detail
 router.get("/post/:id", postController.post_detail);
 
-// POST - Create Post
+// POST - Create/Update Post
 router.post("/post/create", postController.create_post);
 
-// POST - Edit Post
 // POST - Delete Post
 
 /// COMMENT ROUTES ///

@@ -54,7 +54,7 @@ exports.publish_status = asyncHandler(async(req, res, next) => {
     }
 });
 
-// Create Post
+// Create/Update Post
 
 exports.create_post = [
 
@@ -66,23 +66,52 @@ exports.create_post = [
     asyncHandler(async (req, res, next) => {
 
         const error = validationResult(req);
-        const post = new Post({
-
-            title: req.body.title,
-            body: req.body.body,
-
-            timestamp: new Date(),
-
-            author: req.body.author,
-            publishStatus: false
-        });
-
+        
         if(error.isEmpty){
 
-            await post.save();
+            if(req.body.id){
 
-            const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
-            res.redirect(referer + "/dashboard" + post.url);
+                // Update Block
+
+                const post = new Post({
+
+                    title: req.body.title,
+                    body: req.body.body,
+        
+                    timestamp: new Date(),
+        
+                    author: req.body.author,
+                    publishStatus: false,
+
+                    _id: req.body.id
+                });
+ 
+                await Post.findByIdAndUpdate(req.body.id, post);
+
+                const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
+                res.redirect(referer + "/dashboard" + post.url);
+            }
+
+            else{
+                
+                // Create Block
+
+                const post = new Post({
+
+                    title: req.body.title,
+                    body: req.body.body,
+        
+                    timestamp: new Date(),
+        
+                    author: req.body.author,
+                    publishStatus: false
+                });
+
+                await post.save();
+            
+                const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
+                res.redirect(referer + "/dashboard" + post.url);
+            }
         }
 
         else
