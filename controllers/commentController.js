@@ -66,3 +66,12 @@ exports.create_comment = [
             res.status(400).json("DB Injection Failed!");
     })
 ];
+
+// Delete Comment
+exports.delete_comment = asyncHandler(async (req, res, next) => {
+
+    await Comment.findByIdAndDelete(req.params.commentid);
+
+    const referer = req.headers.referer.substring(0, req.headers.referer.length - 1);
+    res.redirect(referer + "/dashboard/post/" + req.params.postid);  
+});

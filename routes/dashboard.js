@@ -40,7 +40,7 @@ router.get("/post/:postid/comment/:commentid", commentController.comment_detail)
 // POST - Create Comment
 router.post("/post/:postid/comment/create", commentController.create_comment);
 
-// POST - Edit Comment
 // POST - Delete Comment
+router.post("/post/:postid/comment/:commentid/delete", commentController.delete_comment);
 
 module.exports = router;
