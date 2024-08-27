@@ -13,7 +13,7 @@ const commentController = require("../controllers/commentController");
 // GET - User Detail
 router.get("/user", userController.user_detail);
 
-// POST - Edit User Detail 
+// POST - Edit User Detail
 
 /// POST ROUTES ///
 
@@ -35,7 +35,11 @@ router.post("/post/:id/delete", postController.delete_post);
 /// COMMENT ROUTES ///
 
 // GET - Comment Detail
+router.get("/post/:postid/comment/:commentid", commentController.comment_detail);
+
 // POST - Create Comment
+router.post("/post/:postid/comment/create", commentController.create_comment);
+
 // POST - Edit Comment
 // POST - Delete Comment
 

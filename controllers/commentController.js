@@ -20,24 +20,49 @@ exports.create_comment = [
     asyncHandler(async (req, res, next) => {
     
         const error = validationResult(req);
-        const comment = new Comment({
 
-            body: req.body.body,
+        if(error.isEmpty){
 
-            username: req.body.username,
-            email: req.body.email,
+            if(req.body.comment){
 
-            post: req.body.post,
-            timestamp: new Date()
-        });
-        
-        if(!error.isEmpty)
-            res.status(400).json("DB Injection Failed!");
-            
-        else {
-         
-            await comment.save();
-            res.status(200).json("Comment Added Successfully!");
+                const comment = new Comment({
+
+                    body: req.body.body,
+
+                    username: req.body.username,
+                    email: req.body.email,
+
+                    post: req.body.post,
+                    timestamp: new Date(),
+
+                    _id: req.body.comment
+                });
+                  
+                await Comment.findByIdAndUpdate(req.body.comment, comment);
+
+                const referer = req.headers.referer.substring(0, req.headers.referer.length - 1);
+                res.redirect(referer + "/dashboard" + comment.url);  
+            }
+
+            else{ 
+
+                const comment = new Comment({
+
+                    body: req.body.body,
+
+                    username: req.body.username,
+                    email: req.body.email,
+
+                    post: req.body.post,
+                    timestamp: new Date()
+                });
+                
+                await comment.save();
+                res.status(200).json("Comment Added Successfully!");
+            }
         }
+
+        else
+            res.status(400).json("DB Injection Failed!");
     })
 ];
