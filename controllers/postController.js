@@ -21,8 +21,13 @@ exports.index = asyncHandler(async (req, res, next) => {
 // Dashboard Home Page
 exports.dashboard = asyncHandler(async (req, res, next) => {
 
-    const posts = await Post.find().exec();
-    res.status(200).json({ posts: posts });
+    const [ author, posts ] = await Promise.all([
+        
+        User.find().exec(),
+        Post.find().exec()
+    ]);
+
+    res.status(200).json({ author: author, posts: posts });
 });
 
 // Post Detail
@@ -58,7 +63,7 @@ exports.publish_status = asyncHandler(async(req, res, next) => {
 
 exports.create_post = [
 
-    body("title", "Title cannot be empty").trim().isLength({ min: 1 }).escape(),
+    body("title", "Title cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
 
     body("author", "Author cannot be empty!").trim().isLength({ min: 1 }).escape(),

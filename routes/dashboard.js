@@ -14,6 +14,7 @@ const commentController = require("../controllers/commentController");
 router.get("/user", userController.user_detail);
 
 // POST - Edit User Detail
+router.post("/user/edit", userController.user_edit);
 
 /// POST ROUTES ///
 
