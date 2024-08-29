@@ -3,6 +3,11 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
+// Home
+exports.home = asyncHandler(async (req, res, next) => {
+    res.status(200).json({ public: "http://localhost:5173/", private: "http://localhost:5174/" });
+});
+
 // User Detail
 exports.user_detail = asyncHandler(async (req, res, next) => {
 

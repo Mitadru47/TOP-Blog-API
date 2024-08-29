@@ -8,6 +8,9 @@ const commentController = require("../controllers/commentController");
 
 /////////////////////////////////////// Blog API - Private ///////////////////////////////////////
 
+// GET - Home
+router.get("/home", userController.home);
+
 /// USER ROUTES ///
 
 // GET - User Detail
