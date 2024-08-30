@@ -8,8 +8,16 @@ const commentController = require("../controllers/commentController");
 
 /////////////////////////////////////// Blog API - Private ///////////////////////////////////////
 
-// GET - Home
-router.get("/home", userController.home);
+/// AUTHENTICATION ROUTES ///
+
+// POST - Log In
+router.post("/login", userController.login);
+
+// GET - Log In Check
+router.get("/login/check", userController.login_check);
+
+// GET - Log Out
+router.get("/logout", userController.logout);
 
 /// USER ROUTES ///
 

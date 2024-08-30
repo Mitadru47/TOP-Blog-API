@@ -3,9 +3,43 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
-// Home
-exports.home = asyncHandler(async (req, res, next) => {
-    res.status(200).json({ public: "http://localhost:5173/", private: "http://localhost:5174/" });
+const passport = require("passport");
+
+// Log In
+exports.login = asyncHandler(async (req, res, next) => {
+
+    passport.authenticate("login", asyncHandler(async (error, user, info) => {
+
+        if(error)
+            return res.status(500).json({ message: "Something went wrong!", error: (error || "Internal Server Error")});
+        
+        // req.login is provided by passport to serilize user id
+        req.login(user, async (error) => {
+
+            if(error)
+                return res.status(500).json({ message: "Something went wrong!", error: (error || "Internal Server Error")});
+        
+            return res.send({ user, info });
+        });
+
+    }));
+
+});
+
+// Log In Check
+exports.login_check = asyncHandler(async (req, res, next) => {
+    
+    if(!req.user)
+        throw new Error("User not authenticated!");
+
+    res.json(req.user);
+});
+
+// Log Out
+exports.logout = asyncHandler(async (req, res, next) => {
+
+    req.logout();
+    res.json({ message: "Logged Out!" });
 });
 
 // User Detail
