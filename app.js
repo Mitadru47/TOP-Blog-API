@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 
-// Establishing URL Parser
+// Establishing URL & JSON Parsers
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // MongoDB Connection Setup
@@ -17,14 +19,29 @@ async function main(){
 
 main().catch((error) => console.log(error));
 
+// Express Session Setup
+
+const session = require("express-session"); // Dependency used in the background by passport.js
+const MongoStore = require("connect-mongo");
+
+const sessionStore = MongoStore.create({ mongoUrl: connectionString, collectionName: "sessions" });
+
+app.use(session(
+    { 
+        secret: "randomSecret", 
+        resave: false,
+        saveUninitialized: true,
+
+        store: sessionStore,
+        cookie: { maxAge: 1000 * 60 * 60 * 24 } // Expiration: 1 day
+    }
+));
+
 // Authentication Utility
 
 const passport = require("passport");
 require("./passport/config");
 
-const session = require("express-session"); // Dependency used in the background by passport.js
-
-app.use(session({ secret: "randomSecret", resave: false, saveUninitialized: true }));
 app.use(passport.session());
 
 // Routing

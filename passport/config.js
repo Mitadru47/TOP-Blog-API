@@ -13,12 +13,14 @@ passport.use("login",
         try{
      
             const user = await User.findOne({ username: username }).exec();
-
-            if(user.username !== username)
-                return done(null, false, { message: "Incorrect Username" });
+            
+            if(!user)
+                return done(null, false, { message: "No such user found!" });
 
             if(user.password !== password)
                 return done(null, false, { message: "Incorrect Password" });
+
+            return done(null, user, { message: 'Logged in successfully!' });
         }
 
         catch(error){
