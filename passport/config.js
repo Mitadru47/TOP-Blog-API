@@ -7,7 +7,7 @@ const LocalStrategy = require("passport-local").Strategy;
 
 // Creating a passport middleware to handle User login
 
-passport.use("login",
+passport.use("local",
     new LocalStrategy(async (username, password, done) => {
 
         try{
@@ -15,12 +15,12 @@ passport.use("login",
             const user = await User.findOne({ username: username }).exec();
             
             if(!user)
-                return done(null, false, { message: "No such user found!" });
+                return done(null, false);
 
             if(user.password !== password)
-                return done(null, false, { message: "Incorrect Password" });
+                return done(null, false);
 
-            return done(null, user, { message: 'Logged in successfully!' });
+            return done(null, user);
         }
 
         catch(error){

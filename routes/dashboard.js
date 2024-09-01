@@ -13,9 +13,6 @@ const commentController = require("../controllers/commentController");
 // POST - Log In
 router.post("/login", userController.login);
 
-// GET - Log In Check
-router.get("/login/check", userController.login_check);
-
 // GET - Log Out
 router.get("/logout", userController.logout);
 

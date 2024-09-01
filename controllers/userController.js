@@ -6,24 +6,14 @@ const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 
 // Log In
-exports.login = passport.authenticate("login", {
+exports.login = passport.authenticate("local", {
     failureRedirect: "http://localhost:5174/login", successRedirect: "http://localhost:5174/dashboard" });
-
-// Log In Check
-exports.login_check = asyncHandler(async (req, res, next) => {
-    
-    if(!req.user)
-        res.json("User not authenticated!");
-
-    else
-        res.json(req.user);
-});
 
 // Log Out
 exports.logout = asyncHandler(async (req, res, next) => {
 
-    req.logout();
-    res.json({ message: "Logged Out!" });
+    req.logOut();
+    res.redirect("http://localhost:5174/login");
 });
 
 // User Detail
