@@ -29,11 +29,12 @@ const sessionStore = MongoStore.create({ mongoUrl: connectionString, collectionN
 app.use(session(
     { 
         secret: "randomSecret", 
-        resave: false,
-        saveUninitialized: true,
+        
+        resave: true,
+        saveUninitialized: false,
 
         store: sessionStore,
-        cookie: { maxAge: 1000 * 60 * 60 * 24 } // Expiration: 1 day
+        cookie: { maxAge: 1000 * 60 } // Expiration: 1 minute
     }
 ));
 
