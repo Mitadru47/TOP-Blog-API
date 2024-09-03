@@ -41,7 +41,7 @@ app.use(session(
 // Authentication Utility
 
 const passport = require("passport");
-require("./passport/config");
+require("./passport/config")(passport);   // Passing the Global Passport Object to /passport/config.js
 
 app.use(passport.session());
 

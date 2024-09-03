@@ -1,6 +1,8 @@
 const crypto = require("crypto");
 const fs = require("fs");
 
+const path = require("path");
+
 function genKeyPair(){
 
     // Generates an object where the keys are stored in properties "privateKey" & "publicKey"
@@ -22,10 +24,10 @@ function genKeyPair(){
     });
 
     // Creates the publicKey file
-    fs.writeFileSync(__dirname + "/id_rsa_pub.pem", keyPair.publicKey);
+    fs.writeFileSync(path.join(__dirname, "..", "/id_rsa_pub.pem"), keyPair.publicKey);
 
     // Creates the privateKey file
-    fs.writeFileSync(__dirname + "/id_rsa_priv.pem", keyPair.privateKey);
+    fs.writeFileSync(path.join(__dirname, "..", "/id_rsa_priv.pem"), keyPair.privateKey);
 }
 
 genKeyPair();
