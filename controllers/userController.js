@@ -3,11 +3,22 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
-const passport = require("passport");
+const generateJWT = require("../utils/generateJWT");
 
 // Log In
-exports.login = passport.authenticate("local", {
-    failureRedirect: "http://localhost:5174/login", successRedirect: "http://localhost:5174/dashboard" });
+exports.login = asyncHandler(async (req, res, next) => {
+ 
+    const user = await User.findOne({ username: req.body.username }).exec();
+
+    if(user && user.password === req.body.password){
+
+        const tokenObject = generateJWT(user);
+        res.status(200).json({ success: true, token: tokenObject, expiresIn: tokenObject.expires });
+    }
+
+    else
+        res.status(200).json({ success: false, message: "Login Failed!" });
+});
 
 // Log Out
 exports.logout = asyncHandler(async (req, res, next) => {

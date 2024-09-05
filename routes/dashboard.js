@@ -6,6 +6,8 @@ const userController = require("../controllers/userController");
 const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
 
+const passport = require("passport");
+
 /////////////////////////////////////// Blog API - Private ///////////////////////////////////////
 
 /// AUTHENTICATION ROUTES ///
@@ -27,7 +29,7 @@ router.post("/user/edit", userController.user_edit);
 /// POST ROUTES ///
 
 // GET - Dashboard
-router.get("/", postController.dashboard);
+router.get("/", passport.authenticate("jwt", { session: false }), postController.dashboard);
 
 // POST - Publish Status
 router.post("/post/:postid/publishStatus/:status", postController.publish_status);
