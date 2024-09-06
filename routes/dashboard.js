@@ -21,10 +21,10 @@ router.get("/logout", userController.logout);
 /// USER ROUTES ///
 
 // GET - User Detail
-router.get("/user", userController.user_detail);
+router.get("/user", passport.authenticate("jwt", { session: false }), userController.user_detail);
 
 // POST - Edit User Detail
-router.post("/user/edit", userController.user_edit);
+router.post("/user/edit", passport.authenticate("jwt", { session: false }), userController.user_edit);
 
 /// POST ROUTES ///
 
@@ -35,7 +35,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), postController
 router.post("/post/:postid/publishStatus/:status", postController.publish_status);
 
 // GET -  Post Detail
-router.get("/post/:id", postController.post_detail);
+router.get("/post/:id", passport.authenticate("jwt", { session: false }), postController.post_detail);
 
 // POST - Create/Update Post
 router.post("/post/create", postController.create_post);
@@ -46,7 +46,7 @@ router.post("/post/:id/delete", postController.delete_post);
 /// COMMENT ROUTES ///
 
 // GET - Comment Detail
-router.get("/post/:postid/comment/:commentid", commentController.comment_detail);
+router.get("/post/:postid/comment/:commentid", passport.authenticate("jwt", { session: false }), commentController.comment_detail);
 
 // POST - Create Comment
 router.post("/post/:postid/comment/create", commentController.create_comment);

@@ -50,7 +50,6 @@ exports.user_edit = [
 
         if(error.isEmpty){
 
-
             const user = new User({
 
                 firstName: req.body.firstName,
@@ -65,9 +64,7 @@ exports.user_edit = [
             });
 
             await User.findByIdAndUpdate(req.body.id, user);
-
-            const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
-            res.redirect(referer + "/dashboard" + user.url);
+            res.status(200).json("Success!");
         }
 
         else
