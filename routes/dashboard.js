@@ -38,7 +38,7 @@ router.post("/post/:postid/publishStatus/:status", postController.publish_status
 router.get("/post/:id", passport.authenticate("jwt", { session: false }), postController.post_detail);
 
 // POST - Create/Update Post
-router.post("/post/create", postController.create_post);
+router.post("/post/create", passport.authenticate("jwt", { session: false }), postController.create_post);
 
 // POST - Delete Post
 router.post("/post/:id/delete", postController.delete_post);

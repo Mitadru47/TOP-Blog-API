@@ -64,7 +64,7 @@ exports.user_edit = [
             });
 
             await User.findByIdAndUpdate(req.body.id, user);
-            res.status(200).json("Success!");
+            res.status(200).json({ status: "Success!" });
         }
 
         else

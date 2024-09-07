@@ -92,9 +92,7 @@ exports.create_post = [
                 });
  
                 await Post.findByIdAndUpdate(req.body.id, post);
-
-                const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
-                res.redirect(referer + "/dashboard" + post.url);
+                res.status(200).json({ status: "Success!", id: post._id });
             }
 
             else{
@@ -112,10 +110,8 @@ exports.create_post = [
                     publishStatus: false
                 });
 
-                await post.save();
-            
-                const referer = req.headers.referer.substring(0, req.headers.referer.length - 1); // http://localhost:5174       
-                res.redirect(referer + "/dashboard" + post.url);
+                await post.save();            
+                res.status(200).json({ status: "Success!", id: post._id });
             }
         }
 
