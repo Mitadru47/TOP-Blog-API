@@ -49,13 +49,13 @@ exports.publish_status = asyncHandler(async(req, res, next) => {
     if(req.params.status === "publish"){
         
         await Post.findByIdAndUpdate(req.params.postid, { publishStatus: true }).exec();
-        res.status(200).json("Published!");    
+        res.status(200).json({ status: "Success!" });   
     }
 
     if(req.params.status === "unpublish"){
         
         await Post.findByIdAndUpdate(req.params.postid, { publishStatus: false }).exec();
-        res.status(200).json("Unpublished!");      
+        res.status(200).json({ status: "Success!" });  
     }
 });
 
@@ -125,7 +125,5 @@ exports.create_post = [
 exports.delete_post = asyncHandler(async (req, res, next) => {
 
     await Post.findByIdAndDelete(req.params.id);
-   
-    const referer = req.headers.referer.substring(0, req.headers.referer.length - 1);
-    res.redirect(referer + "/dashboard");
+    res.status(200).json({ status: "Success!" });
 });

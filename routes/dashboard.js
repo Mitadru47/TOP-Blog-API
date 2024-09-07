@@ -32,7 +32,7 @@ router.post("/user/edit", passport.authenticate("jwt", { session: false }), user
 router.get("/", passport.authenticate("jwt", { session: false }), postController.dashboard);
 
 // POST - Publish Status
-router.post("/post/:postid/publishStatus/:status", postController.publish_status);
+router.post("/post/:postid/publishStatus/:status", passport.authenticate("jwt", { session: false }), postController.publish_status);
 
 // GET -  Post Detail
 router.get("/post/:id", passport.authenticate("jwt", { session: false }), postController.post_detail);
@@ -41,7 +41,7 @@ router.get("/post/:id", passport.authenticate("jwt", { session: false }), postCo
 router.post("/post/create", passport.authenticate("jwt", { session: false }), postController.create_post);
 
 // POST - Delete Post
-router.post("/post/:id/delete", postController.delete_post);
+router.post("/post/:id/delete", passport.authenticate("jwt", { session: false }), postController.delete_post);
 
 /// COMMENT ROUTES ///
 
@@ -49,9 +49,9 @@ router.post("/post/:id/delete", postController.delete_post);
 router.get("/post/:postid/comment/:commentid", passport.authenticate("jwt", { session: false }), commentController.comment_detail);
 
 // POST - Create Comment
-router.post("/post/:postid/comment/create", commentController.create_comment);
+router.post("/post/:postid/comment/create", passport.authenticate("jwt", { session: false }), commentController.create_comment);
 
 // POST - Delete Comment
-router.post("/post/:postid/comment/:commentid/delete", commentController.delete_comment);
+router.post("/post/:postid/comment/:commentid/delete", passport.authenticate("jwt", { session: false }), commentController.delete_comment);
 
 module.exports = router;

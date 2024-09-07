@@ -39,9 +39,7 @@ exports.create_comment = [
                 });
                   
                 await Comment.findByIdAndUpdate(req.body.comment, comment);
-
-                const referer = req.headers.referer.substring(0, req.headers.referer.length - 1);
-                res.redirect(referer + "/dashboard" + comment.url);  
+                res.status(200).json({ status: "Success!", url: comment.url });
             }
 
             else{ 
@@ -71,7 +69,5 @@ exports.create_comment = [
 exports.delete_comment = asyncHandler(async (req, res, next) => {
 
     await Comment.findByIdAndDelete(req.params.commentid);
-
-    const referer = req.headers.referer.substring(0, req.headers.referer.length - 1);
-    res.redirect(referer + "/dashboard/post/" + req.params.postid);  
+    res.status(200).json({ status: "Success!", id: req.params.postid });
 });
