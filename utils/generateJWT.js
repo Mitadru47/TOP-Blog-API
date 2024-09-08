@@ -8,7 +8,7 @@ const PRIV_KEY = fs.readFileSync(path.join(__dirname, "..", "id_rsa_priv.pem"), 
 function issueJWT(user){
 
     const _id = user._id;
-    const expiresIn = "20 seconds";
+    const expiresIn = "2 hours";
 
     const payload = {
 

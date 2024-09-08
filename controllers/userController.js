@@ -20,13 +20,6 @@ exports.login = asyncHandler(async (req, res, next) => {
         res.status(200).json({ success: false, message: "Login Failed!" });
 });
 
-// Log Out
-exports.logout = asyncHandler(async (req, res, next) => {
-
-    req.logOut();
-    res.redirect("http://localhost:5174/login");
-});
-
 // User Detail
 exports.user_detail = asyncHandler(async (req, res, next) => {
 

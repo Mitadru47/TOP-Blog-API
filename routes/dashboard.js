@@ -15,9 +15,6 @@ const passport = require("passport");
 // POST - Log In
 router.post("/login", userController.login);
 
-// GET - Log Out
-router.get("/logout", userController.logout);
-
 /// USER ROUTES ///
 
 // GET - User Detail
