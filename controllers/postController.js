@@ -12,7 +12,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     const [ author, posts ] = await Promise.all([
         
         User.find().exec(),
-        Post.find({ publishStatus: true }).exec()
+        Post.find({ publishStatus: true }).sort({ timestamp: -1 }).exec()
     ]);
 
     res.status(200).json({ author: author, posts: posts });
@@ -24,7 +24,7 @@ exports.dashboard = asyncHandler(async (req, res, next) => {
     const [ author, posts ] = await Promise.all([
         
         User.find().exec(),
-        Post.find().exec()
+        Post.find().sort({ timestamp: -1 }).exec()
     ]);
 
     res.status(200).json({ author: author, posts: posts });
@@ -36,7 +36,7 @@ exports.post_detail = asyncHandler(async(req, res, next) => {
     const [ post, comments ] = await Promise.all([
 
         Post.find({ _id: req.params.id }).populate("author").exec(),
-        Comment.find({ post: req.params.id }).exec()
+        Comment.find({ post: req.params.id }).sort({ timestamp: -1 }).exec()
     ]);
 
     res.status(200).json({ post: post, comments: comments });

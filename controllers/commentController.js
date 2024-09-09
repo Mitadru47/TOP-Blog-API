@@ -27,13 +27,15 @@ exports.create_comment = [
 
                 const comment = new Comment({
 
-                    body: req.body.body,
-
+                    post: req.body.post,
+                    
                     username: req.body.username,
                     email: req.body.email,
+                    
+                    body: req.body.body,
 
-                    post: req.body.post,
                     timestamp: new Date(),
+                    createdTimestamp: req.body.createdTimestamp,
 
                     _id: req.body.comment
                 });
@@ -46,13 +48,15 @@ exports.create_comment = [
 
                 const comment = new Comment({
 
-                    body: req.body.body,
-
+                    post: req.body.post,
+                    
                     username: req.body.username,
                     email: req.body.email,
+                    
+                    body: req.body.body,
 
-                    post: req.body.post,
-                    timestamp: new Date()
+                    timestamp: new Date(),
+                    createdTimestamp: new Date()
                 });
                 
                 await comment.save();
