@@ -71,6 +71,7 @@ async function createPost(index, title, body, timestamp, publishStatus){
         body: body,
 
         timestamp: timestamp,
+        createdTimestamp: timestamp,
 
         author: postAuthor,
         publishStatus: publishStatus
@@ -107,7 +108,9 @@ async function createComment(username, email, body, post, timestamp){
         body: body,
 
         post: post,
-        timestamp: timestamp
+
+        timestamp: timestamp,
+        createdTimestamp: timestamp,
     });
 
     await comment.save();

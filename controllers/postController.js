@@ -84,6 +84,7 @@ exports.create_post = [
                     body: req.body.body,
         
                     timestamp: new Date(),
+                    createdTimestamp: req.body.createdTimestamp,
         
                     author: req.body.author,
                     publishStatus: false,
@@ -105,6 +106,7 @@ exports.create_post = [
                     body: req.body.body,
         
                     timestamp: new Date(),
+                    createdTimestamp: new Date(),
         
                     author: req.body.author,
                     publishStatus: false
