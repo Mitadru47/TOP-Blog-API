@@ -1,5 +1,5 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
-const connectionString = "mongodb+srv://Admin-Mitadru:DB1234@clustermg.e4fjgoy.mongodb.net/blogDB?retryWrites=true&w=majority&appName=ClusterMG";
 
 const User = require("./models/user");
 
@@ -13,7 +13,7 @@ mongoose.set("strictQuery", false);
 
 async function main(){ 
 
-    await mongoose.connect(connectionString);
+    await mongoose.connect(process.env.DB_CONNECTION_STRING);
     console.log("Debug: Connected to DB!");
 
     await createUser();
@@ -37,7 +37,7 @@ async function createUser(){
         email: "messiah@vanderlinde.gang",
         
         username: "KingLear",
-        password: "passwordD"
+        password: process.env.AUTHOR_PASSWORD
     });
 
     await user.save();

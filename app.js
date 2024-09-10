@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+// Loading .env file contents into process.env
+require("dotenv").config();
+
 // Establishing URL & JSON Parsers
 
 app.use(express.json());
@@ -11,10 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const connectionString = "mongodb+srv://Admin-Mitadru:DB1234@clustermg.e4fjgoy.mongodb.net/blogDB?retryWrites=true&w=majority&appName=ClusterMG";
-
 async function main(){
-    await mongoose.connect(connectionString);
+    await mongoose.connect(process.env.DB_CONNECTION_STRING);
 }
 
 main().catch((error) => console.log(error));
@@ -24,11 +25,11 @@ main().catch((error) => console.log(error));
 const session = require("express-session"); // Dependency used in the background by passport.js
 const MongoStore = require("connect-mongo");
 
-const sessionStore = MongoStore.create({ mongoUrl: connectionString, collectionName: "sessions" });
+const sessionStore = MongoStore.create({ mongoUrl: process.env.DB_CONNECTION_STRING, collectionName: "sessions" });
 
 app.use(session(
     { 
-        secret: "randomSecret", 
+        secret: process.env.SECRET, 
         
         resave: true,
         saveUninitialized: false,
