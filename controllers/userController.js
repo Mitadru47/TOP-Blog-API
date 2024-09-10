@@ -4,20 +4,29 @@ const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
 const generateJWT = require("../utils/generateJWT");
+const bcrypt = require("bcryptjs");
 
 // Log In
 exports.login = asyncHandler(async (req, res, next) => {
  
     const user = await User.findOne({ username: req.body.username }).exec();
 
-    if(user && user.password === req.body.password){
+    if(user){
 
-        const tokenObject = generateJWT(user);
-        res.status(200).json({ success: true, token: tokenObject, expiresIn: tokenObject.expires });
+        const match = await bcrypt.compare(req.body.password, user.password);
+
+        if(match){
+        
+            const tokenObject = generateJWT(user);
+            res.status(200).json({ success: true, token: tokenObject, expiresIn: tokenObject.expires });
+        }
+
+        else
+            res.status(401).json({ status: "Failed!" });
     }
 
     else
-        res.status(200).json({ success: false, message: "Login Failed!" });
+        res.status(400).json({ success: false, message: "Login Failed!" });
 });
 
 // User Detail
@@ -43,21 +52,30 @@ exports.user_edit = [
 
         if(error.isEmpty){
 
-            const user = new User({
+            bcrypt.hash(req.body.password, 10, async (error, hashedPassword) => { 
+                
+                if(!error){
 
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
+                    const user = new User({
 
-                email: req.body.email,
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+        
+                        email: req.body.email,
+        
+                        username: req.body.username,
+                        password: hashedPassword,
+        
+                        _id: req.body.id
+                    });
+        
+                    await User.findByIdAndUpdate(req.body.id, user);
+                    res.status(200).json({ status: "Success!" });
+                }
 
-                username: req.body.username,
-                password: req.body.password,
-
-                _id: req.body.id
+                else
+                    res.status(401).json({ status: "Failed!" });
             });
-
-            await User.findByIdAndUpdate(req.body.id, user);
-            res.status(200).json({ status: "Success!" });
         }
 
         else
