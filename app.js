@@ -48,8 +48,23 @@ app.use(passport.session());
 
 // Routing
 
-const cors = require("cors");   
-app.use(cors());
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+function originHandler(origin, callback){    
+
+    if(!origin) // Allows requests with no origin like mobile apps or curl requests
+        return callback(null, true);    
+    
+    if(allowedOrigins.indexOf(origin) === -1){
+        
+        let msg = "The CORS policy for this site does not allow access from the specified origin.";
+        return callback(new Error(msg), false);
+    }
+    
+    return callback(null, true);
+}
+
+const cors = require("cors");
+app.use(cors({ origin: originHandler }));
 
 const indexRouter = require("./routes/index");
 const dashboardRouter = require("./routes/dashboard");
