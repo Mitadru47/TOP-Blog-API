@@ -64,7 +64,9 @@ function originHandler(origin, callback){
 }
 
 const cors = require("cors");
-app.use(cors({ origin: originHandler }));
+// app.use(cors({ origin: originHandler }));
+
+app.use(cors());
 
 const indexRouter = require("./routes/index");
 const dashboardRouter = require("./routes/dashboard");
