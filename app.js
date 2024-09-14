@@ -48,7 +48,7 @@ app.use(passport.session());
 
 // Routing
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = ["https://blogpublic.netlify.app", "https://blogprivate.netlify.app"];
 function originHandler(origin, callback){    
 
     if(!origin) // Allows requests with no origin like mobile apps or curl requests
@@ -64,9 +64,7 @@ function originHandler(origin, callback){
 }
 
 const cors = require("cors");
-// app.use(cors({ origin: originHandler }));
-
-app.use(cors());
+app.use(cors({ origin: originHandler }));
 
 const indexRouter = require("./routes/index");
 const dashboardRouter = require("./routes/dashboard");
