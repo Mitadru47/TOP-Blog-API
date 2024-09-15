@@ -1,5 +1,5 @@
 # Blog API
-This is an express application hosted via [render](https://render.com/) that serves as a backend to two standalone react frontend applications: <br />
+This is an express application hosted via [render](https://render.com/) that serves as a backend to two standalone react frontend applications: 
 `Blog API - Public` and `Blog API - Private`.
 
 ![Login](https://github.com/user-attachments/assets/22110321-4294-4b20-944d-c81a01a7f93b)
