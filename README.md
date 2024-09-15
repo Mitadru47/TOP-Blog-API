@@ -25,8 +25,6 @@ This project is equipped with the following utilities/features:  <br />
 - Moment.js to handle JWT expiration time parsing operations
 - Bcrypt implementation
 - Restricted CORS Policy
-  - https://blogpublic.netlify.app
-  - https://blogprivate.netlify.app
 
 ## Usage
 `Blog API - Private` Routes are protected by Author Credentials through Passport JWT Authentication Strategy. `Blog API - Public` Routes on the other hand are open and can be used freely. Below is a sample API request. <br /><br />
