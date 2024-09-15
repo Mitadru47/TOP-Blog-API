@@ -27,8 +27,8 @@ This project is equipped with the following utilities/features:  <br />
 - Restricted CORS Policy
 
 ## Usage
-`Blog API - Private` Routes are protected by Author Credentials through Passport JWT Authentication Strategy. `Blog API - Public` Routes on the other hand are open and can be used freely. Below is a sample API request. <br /><br />
-Request:
+`Blog API - Private` Routes are protected by Author Credentials through Passport JWT Authentication Strategy. `Blog API - Public` Routes on the other hand are open and can be used freely. <br /><br />
+Sample Request:
 ```
 https://blog-api-b5qs.onrender.com/index
 ```
