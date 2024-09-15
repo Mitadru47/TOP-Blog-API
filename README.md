@@ -29,7 +29,7 @@ This project is equipped with the following utilities/features:  <br />
   - https://blogprivate.netlify.app
 
 ## Usage
-`Blog API - Private` Routes are protected by Author Credentials through Passport JWT Authentication Strategy. `Blog API - Public` Routes on the other hand are open and can be used freely. Below is a sample API GET request: <br /><br />
+`Blog API - Private` Routes are protected by Author Credentials through Passport JWT Authentication Strategy. `Blog API - Public` Routes on the other hand are open and can be used freely. Below is a sample API request. <br /><br />
 Request:
 ```
 https://blog-api-b5qs.onrender.com/index
