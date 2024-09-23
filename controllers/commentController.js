@@ -16,12 +16,13 @@ exports.create_comment = [
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("username", "Username cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("email", "Email cannot be empty!").trim().isLength({ min: 1 }).escape(),
+    body("email", "Invalid Email!").trim().isEmail().escape(),
 
     asyncHandler(async (req, res, next) => {
     
         const error = validationResult(req);
 
-        if(error.isEmpty){
+        if(error.isEmpty()){
 
             if(req.body.comment){
 
@@ -65,7 +66,7 @@ exports.create_comment = [
         }
 
         else
-            res.status(400).json("DB Injection Failed!");
+            res.status(400).json({ status: "Failure!", error: error.errors });
     })
 ];
 
