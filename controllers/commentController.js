@@ -1,3 +1,5 @@
+var he = require('he');
+
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -30,10 +32,10 @@ exports.create_comment = [
 
                     post: req.body.post,
                     
-                    username: req.body.username,
+                    username: he.decode(req.body.username),
                     email: req.body.email,
                     
-                    body: req.body.body,
+                    body: he.decode(req.body.body),
 
                     timestamp: new Date(),
                     createdTimestamp: req.body.createdTimestamp,
@@ -51,10 +53,10 @@ exports.create_comment = [
 
                     post: req.body.post,
                     
-                    username: req.body.username,
+                    username: he.decode(req.body.username),
                     email: req.body.email,
                     
-                    body: req.body.body,
+                    body: he.decode(req.body.body),
 
                     timestamp: new Date(),
                     createdTimestamp: new Date()
