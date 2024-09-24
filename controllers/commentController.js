@@ -1,3 +1,5 @@
+var he = require('he');
+
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -16,12 +18,13 @@ exports.create_comment = [
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("username", "Username cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("email", "Email cannot be empty!").trim().isLength({ min: 1 }).escape(),
+    body("email", "Invalid Email!").trim().isEmail().escape(),
 
     asyncHandler(async (req, res, next) => {
     
         const error = validationResult(req);
 
-        if(error.isEmpty){
+        if(error.isEmpty()){
 
             if(req.body.comment){
 
@@ -29,10 +32,10 @@ exports.create_comment = [
 
                     post: req.body.post,
                     
-                    username: req.body.username,
+                    username: he.decode(req.body.username),
                     email: req.body.email,
                     
-                    body: req.body.body,
+                    body: he.decode(req.body.body),
 
                     timestamp: new Date(),
                     createdTimestamp: req.body.createdTimestamp,
@@ -50,10 +53,10 @@ exports.create_comment = [
 
                     post: req.body.post,
                     
-                    username: req.body.username,
+                    username: he.decode(req.body.username),
                     email: req.body.email,
                     
-                    body: req.body.body,
+                    body: he.decode(req.body.body),
 
                     timestamp: new Date(),
                     createdTimestamp: new Date()
@@ -65,7 +68,7 @@ exports.create_comment = [
         }
 
         else
-            res.status(400).json("DB Injection Failed!");
+            res.status(400).json({ status: "Failure!", error: error.errors });
     })
 ];
 
