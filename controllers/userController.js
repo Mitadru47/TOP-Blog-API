@@ -7,27 +7,40 @@ const generateJWT = require("../utils/generateJWT");
 const bcrypt = require("bcryptjs");
 
 // Log In
-exports.login = asyncHandler(async (req, res, next) => {
+exports.login = [
+    
+    body("username", "Username cannot be empty!").trim().isLength({ min: 1 }).escape(),
+    body("password", "Password cannot be empty!").trim().isLength({ min: 1 }).escape(),
+    
+    asyncHandler(async (req, res, next) => {
  
-    const user = await User.findOne({ username: req.body.username }).exec();
-
-    if(user){
-
-        const match = await bcrypt.compare(req.body.password, user.password);
-
-        if(match){
+        const error = validationResult(req);
         
-            const tokenObject = generateJWT(user);
-            res.status(200).json({ success: true, token: tokenObject, expiresIn: tokenObject.expires });
+        if(error.isEmpty()){
+
+            const user = await User.findOne({ username: req.body.username }).exec();
+
+            if(user){
+
+                const match = await bcrypt.compare(req.body.password, user.password);
+
+                if(match){
+                
+                    const tokenObject = generateJWT(user);
+                    res.status(200).json({ success: true, token: tokenObject, expiresIn: tokenObject.expires });
+                }
+
+                else
+                    res.status(401).json({ success: false, error: [{ msg: "Incorrect password, Please try again!" }] });
+            }
+
+            else
+                res.status(401).json({ success: false, error: [{ msg: "Invalid username, Please try again!" }] });
         }
 
-        else
-            res.status(401).json({ status: "Failed!" });
-    }
-
-    else
-        res.status(400).json({ success: false, message: "Login Failed!" });
-});
+        else 
+            res.status(500).json({ success: false, error: error.errors });
+})];
 
 // User Detail
 exports.user_detail = asyncHandler(async (req, res, next) => {

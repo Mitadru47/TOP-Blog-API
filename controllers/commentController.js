@@ -68,7 +68,7 @@ exports.create_comment = [
         }
 
         else
-            res.status(400).json({ status: "Failure!", error: error.errors });
+            res.status(500).json({ status: "Failure!", error: error.errors });
     })
 ];
 
