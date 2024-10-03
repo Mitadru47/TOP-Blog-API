@@ -72,6 +72,6 @@ const dashboardRouter = require("./routes/dashboard");
 app.use("/index", indexRouter);
 app.use("/dashboard", dashboardRouter);
 
-app.get("/", (req, res) => {res.status(200).json("Welcome!")});
+app.get("/", (req, res) => { res.status(200).json("Blog API | Express Backend - Active!") });
 
 module.exports = app;

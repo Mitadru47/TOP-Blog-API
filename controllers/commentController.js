@@ -44,7 +44,7 @@ exports.create_comment = [
                 });
                   
                 await Comment.findByIdAndUpdate(req.body.comment, comment);
-                res.status(200).json({ status: "Success!", url: comment.url });
+                res.status(200).json({ status: "Success!" });
             }
 
             else{ 
@@ -63,7 +63,7 @@ exports.create_comment = [
                 });
                 
                 await comment.save();
-                res.status(200).json("Comment Added Successfully!");
+                res.status(200).json({ status: "Success!" });
             }
         }
 

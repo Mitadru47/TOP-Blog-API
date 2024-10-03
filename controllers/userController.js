@@ -27,19 +27,19 @@ exports.login = [
                 if(match){
                 
                     const tokenObject = generateJWT(user);
-                    res.status(200).json({ success: true, token: tokenObject, expiresIn: tokenObject.expires });
+                    res.status(200).json({ status: "Success!", token: tokenObject, expiresIn: tokenObject.expires });
                 }
 
                 else
-                    res.status(401).json({ success: false, error: [{ msg: "Incorrect password, Please try again!" }] });
+                    res.status(401).json({ status: "Failure!", error: [{ msg: "Incorrect password, Please try again!" }] });
             }
 
             else
-                res.status(401).json({ success: false, error: [{ msg: "Invalid username, Please try again!" }] });
+                res.status(401).json({ status: "Failure!", error: [{ msg: "Invalid username, Please try again!" }] });
         }
 
         else 
-            res.status(500).json({ success: false, error: error.errors });
+            res.status(500).json({ status: "Failure!", error: error.errors });
 })];
 
 // User Detail
@@ -55,7 +55,10 @@ exports.user_edit = [
     
     body("firstName", "FirstName cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("lastName", "LastName cannot be empty!").trim().isLength({ min: 1 }).escape(),
+
     body("email", "Email cannot be empty!").trim().isLength({ min: 1 }).escape(),
+    body("email", "Invalid Email!").trim().isEmail().escape(),
+
     body("username", "Username cannot be empty!").trim().isLength({ min: 1 }).escape(),
     body("password", "Password cannot be empty!").trim().isLength({ min: 1 }).escape(),
     
@@ -63,11 +66,16 @@ exports.user_edit = [
 
         const error = validationResult(req);
 
-        if(error.isEmpty){
+        if(error.isEmpty()){
 
-            bcrypt.hash(req.body.password, 10, async (error, hashedPassword) => { 
-                
-                if(!error){
+            const originalUser = await User.find().exec();
+            
+            bcrypt.compare(req.body.password, originalUser[0].password, async function (err, result) {
+
+                if(err)
+                    res.status(500).json({ status: "Failure!", error: [{ msg: "Bcrypt Error!" }] });
+
+                if(result){                    
 
                     const user = new User({
 
@@ -77,7 +85,7 @@ exports.user_edit = [
                         email: req.body.email,
         
                         username: req.body.username,
-                        password: hashedPassword,
+                        password: originalUser[0].password,
         
                         _id: req.body.id
                     });
@@ -87,10 +95,10 @@ exports.user_edit = [
                 }
 
                 else
-                    res.status(401).json({ status: "Failed!" });
+                    res.status(401).json({ status: "Failure!", error: [{ msg: "Incorrect password, Please try again!" }] }); 
             });
         }
 
         else
-            res.status(400).json("DB Injection Failed!");
+            res.status(500).json({ status: "Failure!", error: error.errors });
 })];
