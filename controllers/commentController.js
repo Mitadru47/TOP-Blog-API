@@ -1,4 +1,4 @@
-var he = require('he');
+const he = require('he');
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");

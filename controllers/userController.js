@@ -1,3 +1,4 @@
+const he = require('he');
 const asyncHandler = require("express-async-handler");
 
 const User = require("../models/user");
@@ -18,11 +19,11 @@ exports.login = [
         
         if(error.isEmpty()){
 
-            const user = await User.findOne({ username: req.body.username }).exec();
+            const user = await User.findOne({ username: he.decode(req.body.username) }).exec();
 
             if(user){
 
-                const match = await bcrypt.compare(req.body.password, user.password);
+                const match = await bcrypt.compare(he.decode(req.body.password), user.password);
 
                 if(match){
                 
@@ -79,12 +80,12 @@ exports.user_edit = [
 
                     const user = new User({
 
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
+                        firstName: he.decode(req.body.firstName),
+                        lastName: he.decode(req.body.lastName),
         
                         email: req.body.email,
         
-                        username: req.body.username,
+                        username: he.decode(req.body.username),
                         password: originalUser[0].password,
         
                         _id: req.body.id
