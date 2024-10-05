@@ -12,7 +12,7 @@ exports.comment_detail = asyncHandler(async (req, res, next) => {
     res.status(200).json({ comment: comment });
 });
 
-//  Create Comment
+// Create/Update Comment
 exports.create_comment = [
 
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
@@ -27,6 +27,8 @@ exports.create_comment = [
         if(error.isEmpty()){
 
             if(req.body.comment){
+
+                // Update Block
 
                 const comment = new Comment({
 
@@ -48,6 +50,8 @@ exports.create_comment = [
             }
 
             else{ 
+
+                // Create Block
 
                 const comment = new Comment({
 

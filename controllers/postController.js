@@ -1,3 +1,5 @@
+const he = require('he');
+
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -72,7 +74,7 @@ exports.create_post = [
 
         const error = validationResult(req);
         
-        if(error.isEmpty){
+        if(error.isEmpty()){
 
             if(req.body.id){
 
@@ -80,7 +82,7 @@ exports.create_post = [
 
                 const post = new Post({
 
-                    title: req.body.title,
+                    title: he.decode(req.body.title),
                     body: req.body.body,
         
                     timestamp: new Date(),
@@ -102,7 +104,7 @@ exports.create_post = [
 
                 const post = new Post({
 
-                    title: req.body.title,
+                    title: he.decode(req.body.title),
                     body: req.body.body,
         
                     timestamp: new Date(),
@@ -118,7 +120,7 @@ exports.create_post = [
         }
 
         else
-            res.status(400).json("DB Injection Failed!");
+            res.status(500).json({ status: "Failure!", error: error.errors });
     })
 ];
 
