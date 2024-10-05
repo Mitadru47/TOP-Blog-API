@@ -1,4 +1,4 @@
-var he = require('he');
+const he = require('he');
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
@@ -12,7 +12,7 @@ exports.comment_detail = asyncHandler(async (req, res, next) => {
     res.status(200).json({ comment: comment });
 });
 
-//  Create Comment
+// Create/Update Comment
 exports.create_comment = [
 
     body("body", "Body cannot be empty!").trim().isLength({ min: 1 }).escape(),
@@ -27,6 +27,8 @@ exports.create_comment = [
         if(error.isEmpty()){
 
             if(req.body.comment){
+
+                // Update Block
 
                 const comment = new Comment({
 
@@ -44,10 +46,12 @@ exports.create_comment = [
                 });
                   
                 await Comment.findByIdAndUpdate(req.body.comment, comment);
-                res.status(200).json({ status: "Success!", url: comment.url });
+                res.status(200).json({ status: "Success!" });
             }
 
             else{ 
+
+                // Create Block
 
                 const comment = new Comment({
 
@@ -63,12 +67,12 @@ exports.create_comment = [
                 });
                 
                 await comment.save();
-                res.status(200).json("Comment Added Successfully!");
+                res.status(200).json({ status: "Success!" });
             }
         }
 
         else
-            res.status(400).json({ status: "Failure!", error: error.errors });
+            res.status(500).json({ status: "Failure!", error: error.errors });
     })
 ];
 
