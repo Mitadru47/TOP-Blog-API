@@ -15,6 +15,9 @@ router.get("/user", userController.user_detail);
 
 /// POST ROUTES ///
 
+// GET - Header
+router.get("/header", postController.indexHeader);
+
 // GET - Index
 router.get("/", postController.index);
 

@@ -25,6 +25,9 @@ router.post("/user/edit", passport.authenticate("jwt", { session: false }), user
 
 /// POST ROUTES ///
 
+// GET - Header
+router.get("/header", postController.dashboardHeader);
+
 // GET - Dashboard
 router.get("/", passport.authenticate("jwt", { session: false }), postController.dashboard);
 
