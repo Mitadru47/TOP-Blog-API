@@ -8,28 +8,37 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 
+// Index Header
+exports.indexHeader = asyncHandler(async (req, res, next) => {
+
+    const publishedPostsCount = await Post.countDocuments({ publishStatus: true }).exec();
+    res.status(200).json({ count: publishedPostsCount });
+});
+
 // Index Home Page
 exports.index = asyncHandler(async (req, res, next) => {
 
-    const [ author, posts ] = await Promise.all([
-        
+    const posts = await Post.find({ publishStatus: true }).sort({ timestamp: -1 }).exec();
+    res.status(200).json({ posts: posts });
+});
+
+// Dashboard Header
+exports.dashboardHeader = asyncHandler(async (req, res, next) => {
+
+    const [ author, totalPostsCount ] = await Promise.all([
+
         User.find().exec(),
-        Post.find({ publishStatus: true }).sort({ timestamp: -1 }).exec()
+        Post.countDocuments().exec()
     ]);
 
-    res.status(200).json({ author: author, posts: posts });
+    res.status(200).json({ author: author[0].username, count: totalPostsCount });
 });
 
 // Dashboard Home Page
 exports.dashboard = asyncHandler(async (req, res, next) => {
 
-    const [ author, posts ] = await Promise.all([
-        
-        User.find().exec(),
-        Post.find().sort({ timestamp: -1 }).exec()
-    ]);
-
-    res.status(200).json({ author: author, posts: posts });
+    const posts = await Post.find().sort({ timestamp: -1 }).exec();
+    res.status(200).json({ posts: posts });
 });
 
 // Post Detail
