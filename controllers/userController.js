@@ -71,28 +71,70 @@ exports.user_edit = [
 
             const originalUser = await User.find().exec();
             
-            bcrypt.compare(req.body.password, originalUser[0].password, async function (err, result) {
+            bcrypt.compare(he.decode(req.body.password), originalUser[0].password, async function (err, result) {
 
                 if(err)
                     res.status(500).json({ status: "Failure!", error: [{ msg: "Bcrypt Error!" }] });
 
                 if(result){                    
 
-                    const user = new User({
+                    // Update Password
 
-                        firstName: he.decode(req.body.firstName),
-                        lastName: he.decode(req.body.lastName),
-        
-                        email: req.body.email,
-        
-                        username: he.decode(req.body.username),
-                        password: originalUser[0].password,
-        
-                        _id: req.body.id
-                    });
-        
-                    await User.findByIdAndUpdate(req.body.id, user);
-                    res.status(200).json({ status: "Success!" });
+                    if(req.body.newPassword){
+
+                        if(req.body.newPassword === req.body.confirmPassword){
+
+                            bcrypt.hash(he.decode(req.body.newPassword), 10, async (err, hashedPassword) => {
+
+                                if(err)
+                                    res.status(500).json({ status: "Failure!", error: [{ msg: "Bcrypt Error!" }] });
+
+                                const user = new User({
+
+                                    firstName: he.decode(req.body.firstName),
+                                    lastName: he.decode(req.body.lastName),
+                    
+                                    email: req.body.email,
+                    
+                                    username: he.decode(req.body.username),
+                                    password: hashedPassword,
+                    
+                                    _id: req.body.id
+                                });
+                    
+                                await User.findByIdAndUpdate(req.body.id, user);
+                                res.status(200).json({ status: "Success!" });
+                            });
+                        }
+
+                        else{
+
+                            if(req.body.confirmPassword === "")
+                                res.status(500).json({ status: "Failure!", error: [{ msg: "Confirm password cannot be empty!" }] });
+
+                            else
+                                res.status(500).json({ status: "Failure!", error: [{ msg: "Confirm password doesn't match new password, Please try again!" }] });
+                        }
+                    }
+
+                    else{
+
+                        const user = new User({
+
+                            firstName: he.decode(req.body.firstName),
+                            lastName: he.decode(req.body.lastName),
+            
+                            email: req.body.email,
+            
+                            username: he.decode(req.body.username),
+                            password: originalUser[0].password,
+            
+                            _id: req.body.id
+                        });
+            
+                        await User.findByIdAndUpdate(req.body.id, user);
+                        res.status(200).json({ status: "Success!" });
+                    }
                 }
 
                 else
